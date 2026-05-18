@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Apply-Worker | WELLDONE GROUP</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0B1120', /* Unified Deep Tech Navy */
+                            800: '#1e293b',
+                            500: '#ea580c', /* Safety Orange */
+                            50: '#f8fafc',
+                        }
+                    },
+                    boxShadow: {
+                        'saas': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'glow': '0 0 20px rgba(234, 88, 12, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        
+        /* Modern File Input Styling */
+        input[type=file]::file-selector-button {
+            margin-right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        input[type=file]::file-selector-button:hover {
+            background-color: #e2e8f0;
+            color: #ea580c;
+        }
+        
+        /* Hide scrollbar for clean UI */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- FIXED GLOBAL NAVIGATION COMPONENT (Stationary at top) -->
+    <div id="navigationWrapper" class="fixed top-0 inset-x-0 z-50 w-full shadow-2xl">
+        
+        <!-- MAIN HEADER BLOCK -->
+        <header id="mainHeaderBlock" class="w-full bg-brand-900/50 backdrop-blur-md border-b border-transparent transition-all duration-300 relative z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div class="flex justify-between items-center h-16 sm:h-20 w-full">
+                    
+                    <!-- Left: Brand Pictorial Graphic Asset -->
+                    <div class="flex items-center z-20">
+                        <a href="index.html" class="hover:opacity-80 transition-opacity flex items-center">
+                            <img src="logo/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/120x40/ea580c/ffffff?text=LOGO';" alt="WELLDONE" class="h-8 sm:h-10 w-auto">
+                        </a>
+                    </div>
+
+                    <!-- CENTER: Typography Core Identity -->
+                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                        <a href="index.html" class="font-extrabold text-[15px] sm:text-lg md:text-xl lg:text-2xl tracking-tight uppercase hover:opacity-80 transition-opacity">
+                            <span class="text-white">WELLDONE</span> <span class="text-brand-500">GROUP</span>
+                        </a>
+                    </div>
+
+                    <!-- Right: Core System Portals & Call Actions -->
+                    <div class="flex items-center justify-end z-20">
+                        <!-- Desktop Links Component -->
+                        <div class="hidden lg:flex space-x-6 text-sm font-semibold text-slate-300 items-center mr-6">
+                            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                            <a href="register-client.html" class="px-5 py-2.5 bg-brand-500 hover:bg-orange-600 text-white font-bold rounded-lg shadow-glow transition-all">Request Staff</a>
+                        </div>
+
+                        <!-- Integrated Authorization Portal Direct Entry -->
+                        <a href="login.html" id="navAuthBtn" class="hidden sm:inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-bold text-white bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-sm hover:bg-brand-500 hover:border-brand-500 transition-all">
+                            <svg class="w-4 h-4 mr-2 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                            <span>Portal Login</span>
+                        </a>
+                        
+                        <!-- Mobile Trigger Component -->
+                        <button id="mobile-menu-button" class="lg:hidden text-slate-300 hover:text-white focus:outline-none ml-3 relative transition-all">
+                            <!-- Hamburger Icon -->
+                            <svg id="icon-menu" class="w-7 h-7 block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                            <!-- Close Icon -->
+                            <svg id="icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MOBILE SYSTEM DRAWER DROPDOWN -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-full w-full left-0 bg-brand-900 border-b border-slate-700 shadow-2xl z-30">
+            <div class="px-4 pt-2 pb-6 space-y-2 max-h-[80vh] overflow-y-auto">
+                <a href="index.html" class="block px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">Home</a>
+                <a href="register-client.html" class="block px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">Request Staff</a>
+                <a href="login.html" id="mobileAuthBtn" class="block px-4 py-3 rounded-lg text-base font-bold text-white bg-brand-500 hover:bg-orange-600 transition-colors mt-4 text-center">Portal Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="flex-grow pt-28 pb-12 px-4 sm:px-6 lg:pt-36">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Header Copy -->
+            <div class="mb-10 text-center sm:text-left">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">Worker Onboarding</h1>
+                <p class="text-slate-500 text-lg">Complete your profile to access live shifts across the network.</p>
+            </div>
+
+            <!-- THE FORM CARD -->
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200 overflow-hidden">
+                <form action="#" method="POST" id="registrationForm" class="divide-y divide-slate-100">
+                    
+                    <!-- SECTION 1: Core Personal Identity (Biodata) -->
+                    <div class="p-6 sm:p-10">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">1</div>
+                            <h2 class="text-xl font-bold text-slate-900">Core Personal Identity (Biodata)</h2>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">First Name (As shown on ID) *</label>
+                                <input type="text" name="firstName" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Surname *</label>
+                                <input type="text" name="lastName" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Date of Birth *</label>
+                                <input type="date" name="dob" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-slate-600">
+                                <p class="text-xs text-slate-400 mt-1">Required for regulatory age limit & Right to Work tracking.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">National Insurance (NI) Number *</label>
+                                <input type="text" name="ni_number" required placeholder="e.g. QQ 12 34 56 A" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all uppercase">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Gender *</label>
+                                <select name="gender" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all font-medium text-slate-700">
+                                    <option value="" disabled selected>-- Select --</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Non-binary">Non-binary</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
+                                <p class="text-xs text-slate-400 mt-1">Required for HR records and Equality Act 2010 monitoring.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Ethnicity <span class="text-slate-400 font-normal">(Optional)</span></label>
+                                <select name="ethnicity" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all font-medium text-slate-700">
+                                    <option value="" selected>Prefer not to say</option>
+                                    <option value="White British">White — British</option>
+                                    <option value="White Irish">White — Irish</option>
+                                    <option value="White Other">White — Any other White background</option>
+                                    <option value="Mixed White Black Caribbean">Mixed — White & Black Caribbean</option>
+                                    <option value="Mixed White Black African">Mixed — White & Black African</option>
+                                    <option value="Mixed White Asian">Mixed — White & Asian</option>
+                                    <option value="Mixed Other">Mixed — Any other Mixed background</option>
+                                    <option value="Asian British">Asian or Asian British — Indian</option>
+                                    <option value="Asian Pakistani">Asian or Asian British — Pakistani</option>
+                                    <option value="Asian Bangladeshi">Asian or Asian British — Bangladeshi</option>
+                                    <option value="Asian Other">Asian — Any other Asian background</option>
+                                    <option value="Black African">Black or Black British — African</option>
+                                    <option value="Black Caribbean">Black or Black British — Caribbean</option>
+                                    <option value="Black Other">Black — Any other Black background</option>
+                                    <option value="Other">Any other ethnic group</option>
+                                </select>
+                                <p class="text-xs text-slate-400 mt-1">Equal opportunities monitoring — Equality Act 2010. Voluntary.</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Current Residential Address Line *</label>
+                                <input type="text" name="address_line" required placeholder="Street address, apartment or building name" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all mb-3">
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-1">City *</label>
+                                        <input type="text" name="city" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-1">Home Postcode *</label>
+                                        <input type="text" name="postcode" required placeholder="e.g. SR1 1AA" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all uppercase">
+                                    </div>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1.5">Your postcode is used to automatically calculate travel distances to nearby shift environments.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2: Contact & Communication Channels -->
+                    <div class="p-6 sm:p-10 bg-slate-50/30">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">2</div>
+                            <h2 class="text-xl font-bold text-slate-900">Contact & Communication Channels</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Mobile Phone Number *</label>
+                                <div class="flex space-x-2">
+                                    <select name="countryCode" required class="w-1/3 px-2 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm font-medium">
+                                        <option value="+44" selected>🇬🇧 +44</option>
+                                        <option value="+1">🇺🇸 +1</option>
+                                        <option value="+353">🇮🇪 +353</option>
+                                        <option value="+39">🇮🇹 +39</option>
+                                        <option value="+49">🇩🇪 +49</option>
+                                        <option value="other">🌐 Other</option>
+                                    </select>
+                                    <input type="tel" name="mobile_phone" required placeholder="7000 000000" class="w-2/3 px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Personal Email Address *</label>
+                                <input type="email" name="email" required placeholder="name@example.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all">
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label class="flex items-start p-4 border border-brand-200 bg-orange-50/50 rounded-xl cursor-pointer hover:bg-orange-50 transition-colors shadow-sm">
+                                <div class="flex items-center h-5">
+                                    <input type="checkbox" name="whatsapp_agreement" id="whatsapp_agreement" value="Yes" class="w-5 h-5 text-brand-500 border-slate-300 rounded focus:ring-brand-500">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <span class="font-bold text-slate-900">WhatsApp Dispatch System Agreement</span>
+                                    <p class="text-slate-500 mt-0.5 text-xs sm:text-sm">I explicitly agree to receive rapid shift vacancy broadcasts, booking deployment status logs, and real-time operational notifications via WhatsApp.</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Emergency Contact -->
+                        <div class="mt-6 pt-6 border-t border-slate-200">
+                            <div class="flex items-center mb-4">
+                                <svg class="w-5 h-5 text-red-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                <h3 class="text-base font-bold text-slate-800">Emergency Contact <span class="text-red-500 text-sm font-semibold">(Required — Health & Safety at Work Act 1974)</span></h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Full Name *</label>
+                                    <input type="text" name="emergency_contact_name" required placeholder="e.g. Jane Smith" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Relationship *</label>
+                                    <select name="emergency_contact_relationship" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-slate-700">
+                                        <option value="" disabled selected>-- Select --</option>
+                                        <option value="Spouse / Partner">Spouse / Partner</option>
+                                        <option value="Parent">Parent</option>
+                                        <option value="Sibling">Sibling</option>
+                                        <option value="Child">Child</option>
+                                        <option value="Friend">Friend</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Phone Number *</label>
+                                    <input type="tel" name="emergency_contact_phone" required placeholder="e.g. 07000 000000" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: Statutory UK Right to Work (RTW) Verification -->
+                    <div class="p-6 sm:p-10">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">3</div>
+                            <h2 class="text-xl font-bold text-slate-900">Statutory UK Right to Work Verification</h2>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">What is your Nationality status? *</label>
+                            <select name="nationality_status" id="nationality_status" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all font-medium text-slate-700">
+                                <option value="" disabled selected>-- Select Nationality profile type --</option>
+                                <option value="uk-irish">United Kingdom / Irish Citizen</option>
+                                <option value="non-uk">Non-UK / Irish Citizen (Requires Share Code)</option>
+                            </select>
+                        </div>
+
+                        <!-- Dynamic Area: Passport Route -->
+                        <div id="rtw-uk-block" class="hidden bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-inner space-y-3">
+                            <label class="block text-sm font-semibold text-slate-700">Upload clear photo/scan of your valid Passport *</label>
+                            <input type="file" name="file_passport" id="file_passport" accept=".jpg,.jpeg,.png,.pdf" class="w-full text-sm text-slate-500 border border-slate-200 rounded-lg bg-white">
+                            <p class="text-xs text-slate-400">Must display the information view page along with expiration indicators clearly.</p>
+                        </div>
+
+                        <!-- Dynamic Area: Share Code Route -->
+                        <div id="rtw-non-uk-block" class="hidden bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-inner grid grid-cols-1 md:grid-cols-2 gap-4 space-y-0">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">9-Character Home Office Share Code *</label>
+                                <input type="text" name="evisa_share_code" id="evisa_share_code" placeholder="e.g. A12 345 67G" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none uppercase tracking-wider">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Confirm Date of Birth *</label>
+                                <input type="date" name="evisa_dob_confirm" id="evisa_dob_confirm" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none text-slate-600">
+                                <p class="text-[11px] text-slate-400 mt-1">This parameter cross-references the Home Office online registry API.</p>
+                            </div>
+                        </div>
+
+                        <!-- Proof of Address — Required for all applicants -->
+                        <div class="mt-5 bg-blue-50/60 p-5 rounded-xl border border-blue-200/80">
+                            <div class="flex items-start mb-3">
+                                <svg class="w-5 h-5 text-blue-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-800 mb-1">Proof of UK Residential Address *</label>
+                                    <p class="text-xs text-slate-500">Required for all applicants. Upload a utility bill, bank statement, or council tax letter dated within the last 3 months showing your name and address.</p>
+                                </div>
+                            </div>
+                            <input type="file" name="file_proof_of_address" id="file_proof_of_address" required accept=".jpg,.jpeg,.png,.pdf" class="w-full text-sm text-slate-500 border border-blue-200 rounded-lg bg-white">
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: Sector Selection & Compliance Verification -->
+                    <div class="p-6 sm:p-10 bg-slate-50/50 space-y-8">
+                        <div>
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">4</div>
+                                <h2 class="text-xl font-bold text-slate-900">Sector Selection & Compliance</h2>
+                            </div>
+                            <p class="text-sm text-slate-500 ml-11">Check all applicable operational profiles where you possess current qualifications.</p>
+                        </div>
+
+                        <!-- Sub-Niche: General Logistics -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" name="niche_logistics" id="niche_logistics" value="Yes" class="w-6 h-6 text-brand-500 border-slate-300 rounded focus:ring-brand-500">
+                                <label for="niche_logistics" class="text-lg font-bold text-slate-900 cursor-pointer">📦 General Logistics Niche</label>
+                            </div>
+                            
+                            <div class="pl-9 space-y-3">
+                                <label class="block text-sm font-semibold text-slate-600">Select Specific Working Competencies:</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <label class="flex items-center space-x-2 text-sm text-slate-700"><input type="checkbox" name="skill_logistics_picker" value="Picker" class="rounded text-brand-500"> <span>Warehouse Picker/Packer</span></label>
+                                    <label class="flex items-center space-x-2 text-sm text-slate-700"><input type="checkbox" name="skill_logistics_loader" value="Loader" class="rounded text-brand-500"> <span>Loader</span></label>
+                                    <label class="flex items-center space-x-2 text-sm text-slate-700"><input type="checkbox" name="skill_logistics_prod" value="Operative" class="rounded text-brand-500"> <span>Production Line Operative</span></label>
+                                </div>
+                                <div class="pt-2">
+                                    <label class="flex items-center space-x-2 text-xs font-medium text-brand-500"><input type="checkbox" name="ppe_kit_confirmation" value="Yes" class="rounded text-orange-500"> <span>I own my own personal protective equipment (Safety Boots & High-Visibility Vest)</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sub-Niche: Forklift Specialist -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" name="niche_forklift" id="niche_forklift" value="Yes" class="w-6 h-6 text-brand-500 border-slate-300 rounded focus:ring-brand-500">
+                                <label for="niche_forklift" class="text-lg font-bold text-slate-900 cursor-pointer">🚜 Forklift Niche (Specialized)</label>
+                            </div>
+                            
+                            <!-- Forklift Dynamic Block -->
+                            <div id="compliance-forklift" class="hidden pl-9 space-y-4 border-t border-slate-100 pt-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-1">Manning Configuration Profile *</label>
+                                        <select name="forklift_type" id="forklift_type" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg flt-field outline-none text-sm">
+                                            <option value="" disabled selected>-- Select classification --</option>
+                                            <option value="Counterbalance">Counterbalance</option>
+                                            <option value="Reach">Reach</option>
+                                            <option value="Both">Both Licenses Active</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-1">Accredited Operator Ticket/License *</label>
+                                        <input type="file" name="file_forklift_license" id="file_forklift_license" accept=".jpg,.jpeg,.png,.pdf" class="w-full text-sm text-slate-500 border border-slate-200 rounded-lg bg-white flt-field">
+                                        <p class="text-[10px] text-slate-400 mt-0.5">Recognized pathways: RTITB, ITSSAR, AITT, NPORS</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sub-Niche: Construction -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" name="niche_construction" id="niche_construction" value="Yes" class="w-6 h-6 text-brand-500 border-slate-300 rounded focus:ring-brand-500">
+                                <label for="niche_construction" class="text-lg font-bold text-slate-900 cursor-pointer">🏗️ Construction Niche</label>
+                            </div>
+
+                            <!-- Construction Dynamic Block -->
+                            <div id="compliance-construction" class="hidden pl-9 space-y-4 border-t border-slate-100 pt-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-1">8-Digit CSCS Registration Number *</label>
+                                        <input type="text" name="cscs_number" id="cscs_number" placeholder="e.g. 01234567" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg construction-field outline-none text-sm tracking-widest">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-1">Card Color Type *</label>
+                                        <select name="cscs_card_type" id="cscs_card_type" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg construction-field outline-none text-sm">
+                                            <option value="" disabled selected>-- Select validation card --</option>
+                                            <option value="Green">Green Labourer Card</option>
+                                            <option value="Blue">Blue Skilled Worker Card</option>
+                                            <option value="Gold">Gold Advanced Craft / Supervisor</option>
+                                            <option value="Red">Red Provisional / Trainee</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sub-Niche: Healthcare Infrastructure -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" name="niche_care" id="niche_care" value="Yes" class="w-6 h-6 text-brand-500 border-slate-300 rounded focus:ring-brand-500">
+                                <label for="niche_care" class="text-lg font-bold text-slate-900 cursor-pointer">🏥 Care Niche</label>
+                            </div>
+
+                            <!-- Care Dynamic Block -->
+                            <div id="compliance-care" class="hidden pl-9 space-y-4 border-t border-slate-100 pt-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-semibold text-slate-700 mb-1">Enhanced DBS Certificate Number *</label>
+                                        <input type="text" name="dbs_number" id="dbs_number" placeholder="e.g. 001234567890" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg care-field outline-none text-sm tracking-wider">
+                                    </div>
+                                    <div class="flex items-center pt-6">
+                                        <label class="flex items-center space-x-2 text-xs font-semibold text-slate-700 cursor-pointer"><input type="checkbox" name="dbs_update_service" value="Yes" class="rounded text-brand-500"> <span>My record is active on the online DBS Update Service</span></label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Upload Mandatory Training Records (Moving & Handling, Safeguarding) *</label>
+                                    <input type="file" name="file_care_training" id="file_care_training" accept=".jpg,.jpeg,.png,.pdf" class="w-full text-sm text-slate-500 border border-slate-200 rounded-lg bg-white care-field">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5: Logistics & Mobilisation -->
+                    <div class="p-6 sm:p-10 bg-white">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">5</div>
+                            <h2 class="text-xl font-bold text-slate-900">Logistics & Mobilisation</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Left Column: Transport Infrastructure -->
+                            <div class="space-y-4">
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Select your transport framework status *</label>
+                                
+                                <!-- Master Option 1 -->
+                                <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50 hover:bg-slate-50 transition-colors shadow-sm">
+                                    <label class="flex items-center space-x-3 cursor-pointer group">
+                                        <input type="radio" name="logistics_transport_status" id="trans_owner" value="Vehicle Owner" required class="w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300">
+                                        <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">I OWN A VEHICLE</span>
+                                    </label>
+                                    
+                                    <!-- Sub Options for Option 1 -->
+                                    <div id="sub-owner-block" class="hidden pl-7 mt-3 space-y-2.5 border-l-2 border-brand-500/30 pt-1">
+                                        <label class="flex items-center space-x-3 cursor-pointer group">
+                                            <input type="radio" name="vehicle_owner_option" value="Wants Fuel Bonus" class="w-3.5 h-3.5 text-orange-500 focus:ring-brand-500 border-slate-300 owner-sub-field">
+                                            <span class="text-xs sm:text-sm text-slate-600 group-hover:text-slate-900">I'd love to earn fuel bonuses for carpooling.</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 cursor-pointer group">
+                                            <input type="radio" name="vehicle_owner_option" value="No Carpool" class="w-3.5 h-3.5 text-orange-500 focus:ring-brand-500 border-slate-300 owner-sub-field">
+                                            <span class="text-xs sm:text-sm text-slate-600 group-hover:text-slate-900">I'm good, thank you.</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Master Option 2 -->
+                                <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50 hover:bg-slate-50 transition-colors shadow-sm">
+                                    <label class="flex items-center space-x-3 cursor-pointer group">
+                                        <input type="radio" name="logistics_transport_status" id="trans_non_owner" value="No Vehicle" class="w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300">
+                                        <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">I DO NOT OWN A VEHICLE</span>
+                                    </label>
+                                    
+                                    <!-- Sub Options for Option 2 -->
+                                    <div id="sub-non-owner-block" class="hidden pl-7 mt-3 space-y-2.5 border-l-2 border-brand-500/30 pt-1">
+                                        <label class="flex items-center space-x-3 cursor-pointer group">
+                                            <input type="radio" name="non_owner_option" value="Wants Carpool" class="w-3.5 h-3.5 text-orange-500 focus:ring-brand-500 border-slate-300 non-owner-sub-field">
+                                            <span class="text-xs sm:text-sm text-slate-600 group-hover:text-slate-900">I would love to carpool</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 cursor-pointer group">
+                                            <input type="radio" name="non_owner_option" value="Public Transport" class="w-3.5 h-3.5 text-orange-500 focus:ring-brand-500 border-slate-300 non-owner-sub-field">
+                                            <span class="text-xs sm:text-sm text-slate-600 group-hover:text-slate-900">I will use public transportation</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Shift Pattern Matrix -->
+                            <div class="space-y-4">
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Select your shift pattern preferences *</label>
+                                
+                                <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/50 space-y-4 shadow-sm">
+                                    <!-- Day Shift option -->
+                                    <label class="flex items-center space-x-3 cursor-pointer group">
+                                        <input type="radio" name="preferred_shift_pattern" value="Day" required class="w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">Day Shift</span>
+                                            <span class="text-xs text-slate-400 font-medium">06:00 to 18:00</span>
+                                        </div>
+                                    </label>
+                                    
+                                    <!-- Night Shift option -->
+                                    <label class="flex items-center space-x-3 cursor-pointer group">
+                                        <input type="radio" name="preferred_shift_pattern" value="Night" class="w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">Night Shift</span>
+                                            <span class="text-xs text-slate-400 font-medium">18:00 to 06:00 AM</span>
+                                        </div>
+                                    </label>
+                                    
+                                    <!-- Decorative Structural Divider Line -->
+                                    <div class="border-t border-slate-200/80 my-2 pt-2"></div>
+                                    
+                                    <!-- Standalone Emergency Overlay Checkbox -->
+                                    <label class="flex items-start space-x-3 cursor-pointer group">
+                                        <input type="checkbox" name="emergency_shift_availability" value="Yes" class="mt-0.5 w-4 h-4 text-brand-500 rounded border-slate-300 focus:ring-brand-500">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-bold text-brand-500 group-hover:text-orange-600 transition-colors">Emergency Shift Deployment</span>
+                                            <span class="text-xs text-slate-400 font-medium">Available for short-notice standby rosters starting at 05:00 AM</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 6: Payroll Setup & HMRC Tax Declaration -->
+                    <div class="p-6 sm:p-10 bg-slate-50/50">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">6</div>
+                            <h2 class="text-xl font-bold text-slate-900">Payroll Setup & HMRC Tax Declaration</h2>
+                        </div>
+                        <p class="text-sm text-slate-500 ml-11 mb-6">Required by HMRC to process your PAYE wages correctly and avoid an emergency tax code.</p>
+
+                        <!-- Bank Details -->
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-6">
+                            <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center">
+                                <svg class="w-5 h-5 text-brand-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                UK Bank Account Details (for BACS Payroll)
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Account Holder Name *</label>
+                                    <input type="text" name="bank_account_name" required placeholder="As shown on your bank card" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Sort Code *</label>
+                                    <input type="text" name="bank_sort_code" required placeholder="e.g. 20-00-00" maxlength="8" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all tracking-widest">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Account Number *</label>
+                                    <input type="text" name="bank_account_number" required placeholder="8-digit account number" maxlength="8" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all tracking-widest">
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-3">Your bank details are encrypted and used solely for BACS payroll transfers. They will never be shared with third parties.</p>
+                        </div>
+
+                        <!-- HMRC Starter Declaration -->
+                        <div class="bg-white p-6 rounded-2xl border border-amber-200/80 bg-amber-50/30 shadow-sm">
+                            <h3 class="text-base font-bold text-slate-800 mb-1 flex items-center">
+                                <svg class="w-5 h-5 text-amber-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                HMRC Starter Checklist — Tax Code Declaration *
+                            </h3>
+                            <p class="text-xs text-slate-500 mb-5 ml-7">This is a legal HMRC requirement for new PAYE starters. Select the statement that applies to you. Choosing incorrectly may result in you paying the wrong amount of tax.</p>
+                            <div class="space-y-3">
+                                <label class="flex items-start p-4 border border-slate-200 rounded-xl cursor-pointer hover:border-brand-500 hover:bg-orange-50/30 transition-all group">
+                                    <input type="radio" name="hmrc_starter_declaration" value="A" required class="mt-1 w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300 flex-shrink-0">
+                                    <div class="ml-3">
+                                        <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">Statement A</span>
+                                        <p class="text-xs text-slate-500 mt-0.5">This is my first job since 6 April and I have not been receiving taxable Jobseeker's Allowance, Employment and Support Allowance, taxable Incapacity Benefit, State or Occupational Pension.</p>
+                                    </div>
+                                </label>
+                                <label class="flex items-start p-4 border border-slate-200 rounded-xl cursor-pointer hover:border-brand-500 hover:bg-orange-50/30 transition-all group">
+                                    <input type="radio" name="hmrc_starter_declaration" value="B" class="mt-1 w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300 flex-shrink-0">
+                                    <div class="ml-3">
+                                        <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">Statement B</span>
+                                        <p class="text-xs text-slate-500 mt-0.5">This is now my only job. I have had another job or received a taxable state benefit since 6 April, but I no longer have that job or receive that benefit.</p>
+                                    </div>
+                                </label>
+                                <label class="flex items-start p-4 border border-slate-200 rounded-xl cursor-pointer hover:border-brand-500 hover:bg-orange-50/30 transition-all group">
+                                    <input type="radio" name="hmrc_starter_declaration" value="C" class="mt-1 w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300 flex-shrink-0">
+                                    <div class="ml-3">
+                                        <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">Statement C</span>
+                                        <p class="text-xs text-slate-500 mt-0.5">I have another job and/or I'm receiving a State, Works or Private Pension. <span class="font-semibold text-amber-600">Note: You will be placed on a BR (Basic Rate) tax code and taxed at 20% on all earnings from this employment.</span></p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 7: Health, Fitness & Availability -->
+                    <div class="p-6 sm:p-10 bg-white">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">7</div>
+                            <h2 class="text-xl font-bold text-slate-900">Health, Fitness & Availability</h2>
+                        </div>
+                        <p class="text-sm text-slate-500 ml-11 mb-6">Required for manual and physical roles. All information is treated as strictly confidential under UK GDPR.</p>
+
+                        <div class="space-y-6">
+                            <!-- Availability Date -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Earliest Available Start Date *</label>
+                                    <input type="date" name="availability_start_date" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-slate-600">
+                                    <p class="text-xs text-slate-400 mt-1">The earliest date you are available to begin accepting shift deployments.</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Preferred Working Radius *</label>
+                                    <select name="travel_radius" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-slate-700">
+                                        <option value="" disabled selected>-- Select max distance --</option>
+                                        <option value="5 miles">Up to 5 miles</option>
+                                        <option value="10 miles">Up to 10 miles</option>
+                                        <option value="15 miles">Up to 15 miles</option>
+                                        <option value="20 miles">Up to 20 miles</option>
+                                        <option value="25+ miles">25+ miles</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Fitness to Work Declaration -->
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                                <h3 class="text-base font-bold text-slate-800 mb-4">Fitness to Work Declaration</h3>
+                                <div class="space-y-4">
+                                    <label class="flex items-start p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:border-brand-500 transition-all group">
+                                        <input type="radio" name="fitness_to_work" value="Fully Fit" required class="mt-1 w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300 flex-shrink-0">
+                                        <div class="ml-3">
+                                            <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">I am fully fit and have no health conditions</span>
+                                            <p class="text-xs text-slate-500 mt-0.5">I confirm I am physically capable of performing manual and physical labour tasks without restriction.</p>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-start p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:border-brand-500 transition-all group">
+                                        <input type="radio" name="fitness_to_work" value="Fit with Adjustments" class="mt-1 w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300 flex-shrink-0">
+                                        <div class="ml-3">
+                                            <span class="text-sm font-bold text-slate-800 group-hover:text-brand-500 transition-colors">I am fit to work but have a condition or disability requiring reasonable adjustments</span>
+                                            <p class="text-xs text-slate-500 mt-0.5">We are committed to supporting workers under the Equality Act 2010. Please provide details below so we can accommodate your needs.</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <!-- Conditional adjustment notes -->
+                                <div id="adjustment-notes-block" class="hidden mt-4 pt-4 border-t border-slate-200">
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Please describe the adjustments required:</label>
+                                    <textarea name="reasonable_adjustments_detail" id="reasonable_adjustments_detail" rows="3" placeholder="e.g. Unable to lift above shoulder height, requires seating during breaks..." class="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition-all text-sm resize-none"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Unspent Criminal Convictions -->
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                                <h3 class="text-base font-bold text-slate-800 mb-1">Unspent Criminal Convictions Declaration</h3>
+                                <p class="text-xs text-slate-500 mb-4">Under the Rehabilitation of Offenders Act 1974, you are only required to disclose <strong>unspent</strong> convictions. Having a conviction does not automatically prevent placement.</p>
+                                <div class="space-y-3">
+                                    <label class="flex items-center p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:border-brand-500 transition-all group">
+                                        <input type="radio" name="criminal_conviction" value="No" required class="w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300 flex-shrink-0">
+                                        <span class="ml-3 text-sm font-semibold text-slate-700 group-hover:text-brand-500 transition-colors">I have no unspent criminal convictions</span>
+                                    </label>
+                                    <label class="flex items-center p-4 border border-slate-200 bg-white rounded-xl cursor-pointer hover:border-brand-500 transition-all group">
+                                        <input type="radio" name="criminal_conviction" value="Yes" class="w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300 flex-shrink-0">
+                                        <span class="ml-3 text-sm font-semibold text-slate-700 group-hover:text-brand-500 transition-colors">I have one or more unspent convictions to declare</span>
+                                    </label>
+                                </div>
+                                <div id="conviction-detail-block" class="hidden mt-4 pt-4 border-t border-slate-200">
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Brief details of conviction(s):</label>
+                                    <textarea name="conviction_details" id="conviction_details" rows="2" placeholder="Nature of offence and approximate date..." class="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition-all text-sm resize-none"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GDPR Consent & Form Submission Action -->
+                    <div class="p-6 sm:p-10 bg-white space-y-6">
+                        <div class="bg-orange-50/50 p-6 rounded-xl border border-brand-200">
+                            <label class="flex items-start cursor-pointer">
+                                <input type="checkbox" name="consent" value="Agreed" required class="mt-1 w-5 h-5 text-brand-500 rounded border-slate-300 focus:ring-brand-500 flex-shrink-0">
+                                <span class="ml-4 text-sm text-slate-700 leading-relaxed">
+                                    <strong>UK GDPR Compliance Consent *</strong>: I understand and completely acknowledge that my personal biodata, identification metrics, and validation document credentials will be securely hosted inside the WELLDONE GROUP infrastructural database environment under strict UK General Data Protection Regulation protocols for active employment screening, site allocation matching, and automatic automated payroll setup strategies.
+                                </span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full sm:w-auto px-10 py-4 bg-brand-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg">
+                            Submit Application & Join Roster
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+            
+            <div class="text-center mt-8 text-xs text-slate-400 font-semibold tracking-wider uppercase">
+                &copy; 2026 WELLDONE GROUP. Secure Application Portal.
+            </div>
+        </div>
+    </main>
+
+    <!-- FORM LOGIC SCRIPTS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // === STATIONARY NAVIGATION MANAGEMENT ===
+            const mainHeaderBlock = document.getElementById('mainHeaderBlock');
+
+            window.addEventListener('scroll', () => {
+                const currentScrollY = Math.max(window.scrollY || document.documentElement.scrollTop, 0);
+                
+                if (currentScrollY <= 10) {
+                    mainHeaderBlock.classList.remove('bg-brand-900', 'border-slate-800');
+                    mainHeaderBlock.classList.add('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                } else {
+                    mainHeaderBlock.classList.remove('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                    mainHeaderBlock.classList.add('bg-brand-900', 'border-slate-800');
+                }
+            }, { passive: true });
+
+            // Mobile Menu Toggle State Logic
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const iconMenu = document.getElementById('icon-menu');
+            const iconClose = document.getElementById('icon-close');
+
+            mobileMenuButton.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    mobileMenu.classList.add('block'); 
+                    iconMenu.classList.add('hidden');
+                    iconMenu.classList.remove('block');
+                    iconClose.classList.remove('hidden');
+                    iconClose.classList.add('block');
+                    mainHeaderBlock.classList.remove('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                    mainHeaderBlock.classList.add('bg-brand-900', 'border-slate-800');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('block');
+                    iconClose.classList.add('hidden');
+                    iconClose.classList.remove('block');
+                    iconMenu.classList.remove('hidden');
+                    iconMenu.classList.add('block');
+                    if (window.scrollY <= 10) {
+                        mainHeaderBlock.classList.remove('bg-brand-900', 'border-slate-800');
+                        mainHeaderBlock.classList.add('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                    }
+                }
+            });
+
+            // Auto-close mobile menu when a link is clicked
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('block');
+                    iconClose.classList.add('hidden');
+                    iconClose.classList.remove('block');
+                    iconMenu.classList.remove('hidden');
+                    iconMenu.classList.add('block');
+                    if (window.scrollY <= 10) {
+                        mainHeaderBlock.classList.remove('bg-brand-900', 'border-slate-800');
+                        mainHeaderBlock.classList.add('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                    }
+                });
+            });
+
+            // === DYNAMIC RIGHT TO WORK INTERACTION LOGIC ===
+            const nationalityStatus = document.getElementById('nationality_status');
+            const rtwUkBlock = document.getElementById('rtw-uk-block');
+            const rtwNonUkBlock = document.getElementById('rtw-non-uk-block');
+            
+            const passportInput = document.getElementById('file_passport');
+            const shareCodeInput = document.getElementById('evisa_share_code');
+            const shareCodeDob = document.getElementById('evisa_dob_confirm');
+
+            nationalityStatus.addEventListener('change', (e) => {
+                if (e.target.value === 'uk-irish') {
+                    rtwUkBlock.classList.remove('hidden');
+                    rtwNonUkBlock.classList.add('hidden');
+                    
+                    passportInput.setAttribute('required', 'true');
+                    shareCodeInput.removeAttribute('required');
+                    shareCodeDob.removeAttribute('required');
+                    
+                    shareCodeInput.value = '';
+                    shareCodeDob.value = '';
+                } else if (e.target.value === 'non-uk') {
+                    rtwNonUkBlock.classList.remove('hidden');
+                    rtwUkBlock.classList.add('hidden');
+                    
+                    shareCodeInput.setAttribute('required', 'true');
+                    shareCodeDob.setAttribute('required', 'true');
+                    passportInput.removeAttribute('required');
+                    
+                    passportInput.value = '';
+                }
+            });
+
+            // === DYNAMIC COMPLIANCE BLOCK VISIBILITY LOGIC ===
+            const setupDynamicToggle = (checkboxId, blockId, fieldClass) => {
+                const checkbox = document.getElementById(checkboxId);
+                const block = document.getElementById(blockId);
+                
+                checkbox.addEventListener('change', (e) => {
+                    const fields = block.querySelectorAll(`.${fieldClass}`);
+                    if (e.target.checked) {
+                        block.classList.remove('hidden');
+                        fields.forEach(field => field.setAttribute('required', 'true'));
+                    } else {
+                        block.classList.add('hidden');
+                        fields.forEach(field => {
+                            field.removeAttribute('required');
+                            field.value = '';
+                        });
+                    }
+                });
+            };
+
+            setupDynamicToggle('niche_forklift', 'compliance-forklift', 'flt-field');
+            setupDynamicToggle('niche_construction', 'compliance-construction', 'construction-field');
+            setupDynamicToggle('niche_care', 'compliance-care', 'care-field');
+
+            // === FITNESS TO WORK CONDITIONAL BLOCK ===
+            const fitnessRadios = document.querySelectorAll('input[name="fitness_to_work"]');
+            const adjustmentNotesBlock = document.getElementById('adjustment-notes-block');
+            const adjustmentTextarea = document.getElementById('reasonable_adjustments_detail');
+            fitnessRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (document.querySelector('input[name="fitness_to_work"]:checked')?.value === 'Fit with Adjustments') {
+                        adjustmentNotesBlock.classList.remove('hidden');
+                        adjustmentTextarea.setAttribute('required', 'true');
+                    } else {
+                        adjustmentNotesBlock.classList.add('hidden');
+                        adjustmentTextarea.removeAttribute('required');
+                        adjustmentTextarea.value = '';
+                    }
+                });
+            });
+
+            // === CRIMINAL CONVICTION CONDITIONAL BLOCK ===
+            const convictionRadios = document.querySelectorAll('input[name="criminal_conviction"]');
+            const convictionDetailBlock = document.getElementById('conviction-detail-block');
+            const convictionTextarea = document.getElementById('conviction_details');
+            convictionRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (document.querySelector('input[name="criminal_conviction"]:checked')?.value === 'Yes') {
+                        convictionDetailBlock.classList.remove('hidden');
+                        convictionTextarea.setAttribute('required', 'true');
+                    } else {
+                        convictionDetailBlock.classList.add('hidden');
+                        convictionTextarea.removeAttribute('required');
+                        convictionTextarea.value = '';
+                    }
+                });
+            });
+
+            // === DYNAMIC MOBILISATION NESTED INTERACTION LOGIC ===
+            const transOwnerRadio = document.getElementById('trans_owner');
+            const transNonOwnerRadio = document.getElementById('trans_non_owner');
+            const subOwnerBlock = document.getElementById('sub-owner-block');
+            const subNonOwnerBlock = document.getElementById('sub-non-owner-block');
+            
+            const ownerFields = document.querySelectorAll('.owner-sub-field');
+            const nonOwnerFields = document.querySelectorAll('.non-owner-sub-field');
+
+            const handleTransportChange = () => {
+                if (transOwnerRadio.checked) {
+                    subOwnerBlock.classList.remove('hidden');
+                    subNonOwnerBlock.classList.add('hidden');
+                    ownerFields.forEach(f => f.setAttribute('required', 'true'));
+                    nonOwnerFields.forEach(f => {
+                        f.removeAttribute('required');
+                        f.checked = false;
+                    });
+                } else if (transNonOwnerRadio.checked) {
+                    subNonOwnerBlock.classList.remove('hidden');
+                    subOwnerBlock.classList.add('hidden');
+                    nonOwnerFields.forEach(f => f.setAttribute('required', 'true'));
+                    ownerFields.forEach(f => {
+                        f.removeAttribute('required');
+                        f.checked = false;
+                    });
+                }
+            };
+
+            transOwnerRadio.addEventListener('change', handleTransportChange);
+            transNonOwnerRadio.addEventListener('change', handleTransportChange);
+
+            // File Size Validation (Max 7MB)
+            const fileInputs = document.querySelectorAll('input[type="file"]');
+            const maxFileSize = 7 * 1024 * 1024; // 7MB in bytes
+
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        if (this.files[0].size > maxFileSize) {
+                            alert('File exceeds the 7MB limit. Please choose a smaller file.');
+                            this.value = ''; // Clear the selected file
+                        }
+                    }
+                });
+            });
+
+            // ==========================================
+            //     GOOGLE APPS SCRIPT SUBMISSION LOGIC
+            // ==========================================
+            
+            // ---> REPLACE THIS URL WITH YOUR NEW GOOGLE APPS SCRIPT WEB APP URL <---
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1qRBrO_2a-ZFUqAAlfNmRvr3Gru_Uu6Yr9sXnbE-eLa3cBdChqm80olXKPt-nym0/exec'; 
+            
+            const form = document.getElementById('registrationForm');
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Securely Uploading...';
+
+                const formData = new FormData(form);
+                const data = {};
+                const filePromises = [];
+
+                // Read input fields and parse files safely into Base64 format strings
+                for (let [key, value] of formData.entries()) {
+                    // Added a check for size > 0 so empty file inputs aren't processed
+                    if (value instanceof File && value.name && value.size > 0) {
+                        const promise = new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = () => resolve({ key, name: value.name, data: reader.result });
+                            reader.readAsDataURL(value);
+                        });
+                        filePromises.push(promise);
+                    } else if (!(value instanceof File)) {
+                        // Handle potential multiple checkboxes with same name (like skill choices)
+                        if (data[key]) {
+                            if (!Array.isArray(data[key])) {
+                                data[key] = [data[key]];
+                            }
+                            data[key].push(value);
+                        } else {
+                            data[key] = value;
+                        }
+                    }
+                }
+
+                const files = await Promise.all(filePromises);
+                files.forEach(f => data[f.key] = { name: f.name, data: f.data });
+
+                try {
+                    // Optimized with mode: 'no-cors' to completely bypass cross-origin browser redirections 
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    // A completed handoff with no connection drop defaults safely into our success execution path
+                    submitBtn.innerHTML = 'Application Complete ✓';
+                    submitBtn.classList.remove('bg-brand-900');
+                    submitBtn.classList.add('bg-green-600');
+
+                    setTimeout(() => {
+                        alert('Application Submitted Successfully! We will review your documents and contact you via WhatsApp.');
+                        // window.location.href = "index.html"; // Redirect disabled for testing, uncomment when live
+                        form.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.classList.remove('bg-green-600');
+                        submitBtn.classList.add('bg-brand-900');
+                    }, 1000);
+
+                } catch (error) {
+                    console.error('Submission Error:', error);
+                    alert('Error submitting application. Please try again or check your internet connection.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

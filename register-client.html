@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Company Registration & Staffing Request | WELLDONE GROUP</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0B1120', /* Unified Deep Tech Navy */
+                            800: '#1e293b',
+                            500: '#ea580c', /* Safety Orange */
+                            50: '#f8fafc',
+                        }
+                    },
+                    boxShadow: {
+                        'saas': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'glow': '0 0 20px rgba(234, 88, 12, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
+        
+        /* Modern Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Typewriter Cursor */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #ea580c;
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col w-full overflow-x-hidden">
+
+    <!-- FIXED GLOBAL NAVIGATION COMPONENT (Stationary at top) -->
+    <div id="navigationWrapper" class="fixed top-0 inset-x-0 z-50 w-full shadow-2xl">
+        
+        <!-- MAIN HEADER BLOCK -->
+        <header id="mainHeaderBlock" class="w-full bg-brand-900/50 backdrop-blur-md border-b border-transparent transition-all duration-300 relative z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div class="flex justify-between items-center h-16 sm:h-20 w-full">
+                    
+                    <!-- Left: Brand Pictorial Graphic Asset -->
+                    <div class="flex items-center z-20">
+                        <a href="index.html" class="hover:opacity-80 transition-opacity flex items-center">
+                            <img src="logo/logo.png" onerror="this.onerror=null; this.src='https://placehold.co/120x40/ea580c/ffffff?text=LOGO';" alt="WELLDONE" class="h-8 sm:h-10 w-auto">
+                        </a>
+                    </div>
+
+                    <!-- CENTER: Typography Core Identity -->
+                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 whitespace-nowrap">
+                        <a href="index.html" class="font-extrabold text-[15px] sm:text-lg md:text-xl lg:text-2xl tracking-tight uppercase hover:opacity-80 transition-opacity">
+                            <span class="text-white">WELLDONE</span> <span class="text-brand-500">GROUP</span>
+                        </a>
+                    </div>
+
+                    <!-- Right: Core System Portals & Call Actions -->
+                    <div class="flex items-center justify-end z-20">
+                        <!-- Desktop Links Component -->
+                        <div class="hidden lg:flex space-x-6 text-sm font-semibold text-slate-300 items-center mr-6">
+                            <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                            <a href="register-worker.html" class="px-5 py-2.5 bg-brand-500 hover:bg-orange-600 text-white font-bold rounded-lg shadow-glow transition-all">Apply to Work</a>
+                        </div>
+
+                        <!-- Integrated Authorization Portal Direct Entry -->
+                        <a href="login.html" id="navAuthBtn" class="hidden sm:inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-bold text-white bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-sm hover:bg-brand-500 hover:border-brand-500 transition-all">
+                            <svg class="w-4 h-4 mr-2 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                            <span>Portal Login</span>
+                        </a>
+                        
+                        <!-- Mobile Trigger Component -->
+                        <button id="mobile-menu-button" class="lg:hidden text-slate-300 hover:text-white focus:outline-none ml-3 relative transition-all">
+                            <!-- Hamburger Icon -->
+                            <svg id="icon-menu" class="w-7 h-7 block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                            <!-- Close Icon -->
+                            <svg id="icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MOBILE SYSTEM DRAWER DROPDOWN -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-full w-full left-0 bg-brand-900 border-b border-slate-700 shadow-2xl z-30">
+            <div class="px-4 pt-2 pb-6 space-y-2 max-h-[80vh] overflow-y-auto">
+                <a href="index.html" class="block px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">Home</a>
+                <a href="register-worker.html" class="block px-4 py-3 rounded-lg text-base font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">Apply to Work</a>
+                <a href="login.html" id="mobileAuthBtn" class="block px-4 py-3 rounded-lg text-base font-bold text-white bg-brand-500 hover:bg-orange-600 transition-colors mt-4 text-center">Portal Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="flex-grow pt-28 pb-12 px-4 sm:px-6 lg:pt-36">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Header Text Block with Typewriter Integration -->
+            <div class="text-center mb-10 min-h-[120px]">
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight sm:text-4xl">
+                    Partner with WELLDONE for <br class="sm:hidden">
+                    <span id="typewriter" class="text-brand-500"></span><span class="cursor">&nbsp;</span>
+                </h1>
+                <p class="mt-4 text-slate-500 text-lg max-w-2xl mx-auto">Register your site for rapid-response workforce supply. We specialize in solving 05:00 AM no-shows across Wearside logistics and construction sites.</p>
+            </div>
+
+            <!-- THE FORM CARD -->
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200 overflow-hidden">
+                <form id="corporateRegistrationForm" class="divide-y divide-slate-100">
+                    
+                    <!-- SECTION 1: Corporate Identity & Business Verification -->
+                    <div class="p-6 sm:p-10">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">1</div>
+                            <h2 class="text-xl font-bold text-slate-900">Corporate Identity & Business Verification</h2>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Registered Company Name *</label>
+                                <input type="text" name="registered_company_name" required placeholder="e.g. WELLDONE GROUP LTD" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                                <p class="text-[11px] text-slate-400 mt-1">Official legal entity name as registered with Companies House.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Companies House Registration Number (CRN)</label>
+                                <input type="text" name="companies_house_crn" maxlength="8" placeholder="e.g. 12345678" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm tracking-wider uppercase">
+                                <p class="text-[11px] text-slate-400 mt-1">8-digit reference used for background and credit metrics.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Trading Name / Brand Name</label>
+                                <input type="text" name="trading_name" placeholder="e.g. WellDone Logistics" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                                <p class="text-[11px] text-slate-400 mt-1">Provide if your operational brand differs from legal registry.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Registered Office Address *</label>
+                                <input type="text" name="registered_office_address" required placeholder="Address, City, Postcode" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                                <p class="text-[11px] text-slate-400 mt-1">Official headquarters profile registered with HMRC.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2: Authorized Primary Contact (The Account Owner) -->
+                    <div class="p-6 sm:p-10 bg-slate-50/30">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">2</div>
+                            <h2 class="text-xl font-bold text-slate-900">Authorized Primary Contact (The Account Owner)</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Authorized Representative Full Name *</label>
+                                <input type="text" name="representative_name" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Job Title / Role *</label>
+                                <input type="text" name="representative_job_title" required placeholder="e.g. Logistics Manager, Site Supervisor" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Direct Corporate Email Address *</label>
+                                <input type="email" id="corporate_email" name="corporate_email" required placeholder="name@yourcompany.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                                <div id="email_warning" class="hidden mt-1.5 text-xs text-red-500 font-semibold flex items-center">
+                                    <svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                    Please supply a secure business domain. Free providers (Gmail, Yahoo, etc.) are flagged.
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Direct Contact Phone Number *</label>
+                                <input type="tel" name="representative_phone" required placeholder="Direct line or mobile number" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: Operational Site Deployment Data -->
+                    <div class="p-6 sm:p-10">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">3</div>
+                            <h2 class="text-xl font-bold text-slate-900">Operational Site Deployment Data</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Primary Site Operations Address *</label>
+                                <input type="text" name="site_deployment_address" required placeholder="Physical deployment environment location" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Site Postcode *</label>
+                                <input type="text" name="site_postcode" required placeholder="e.g. SR5 3XB" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm uppercase tracking-wider">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">On-Site Supervisor / Reporting Contact Name</label>
+                                <input type="text" name="site_supervisor_name" placeholder="Defaults to account owner if blank" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">On-Site Supervisor Contact Number</label>
+                                <input type="text" name="site_supervisor_phone" placeholder="Urgent check-in baseline query line" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: Accounts Payable & Billing Parameters -->
+                    <div class="p-6 sm:p-10 bg-slate-50/30">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 rounded-full bg-brand-900 text-white flex items-center justify-center font-bold text-sm mr-3">4</div>
+                            <h2 class="text-xl font-bold text-slate-900">Accounts Payable & Billing Parameters</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Invoicing & Usage Selection -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Invoicing / Accounts Payable Email Address *</label>
+                                    <input type="email" name="billing_email" required placeholder="finance@yourcompany.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Estimated Weekly Labour Usage</label>
+                                    <select name="estimated_usage" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-500 focus:bg-white outline-none transition-all bg-white text-sm text-slate-700 font-medium">
+                                        <option value="Less than 50 hours">Less than 50 hours per week</option>
+                                        <option value="50-200 hours">50 – 200 operational hours per week</option>
+                                        <option value="200+ hours">200+ massive headcount hours per week</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Purchase Order Requirement Segment -->
+                            <div class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm h-fit">
+                                <span class="block text-sm font-bold text-slate-800 mb-2">Purchase Order (PO) Number Requirement</span>
+                                <p class="text-xs text-slate-400 leading-relaxed mb-4">Does your corporate accounts department mandate a recorded PO attached to structural weekly tracking invoices?</p>
+                                
+                                <div class="flex items-center space-x-6">
+                                    <label class="flex items-center space-x-2.5 cursor-pointer text-sm font-semibold text-slate-700">
+                                        <input type="radio" name="po_requirement" value="Yes" required class="w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300">
+                                        <span>Yes, PO Mandatory</span>
+                                    </label>
+                                    <label class="flex items-center space-x-2.5 cursor-pointer text-sm font-semibold text-slate-700">
+                                        <input type="radio" name="po_requirement" value="No" class="w-4 h-4 text-brand-500 focus:ring-brand-500 border-slate-300" checked>
+                                        <span>No, Process Without PO</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Submit Section Footer Anchor -->
+                    <div class="p-6 sm:p-10 bg-white flex flex-col sm:flex-row justify-between items-center">
+                        <p class="text-sm text-slate-400 font-medium mb-4 sm:mb-0">Your corporate validation manager will establish terms immediately upon tracking confirmation.</p>
+                        <button type="submit" class="w-full sm:w-auto bg-brand-900 hover:bg-slate-800 text-white text-lg font-bold py-3.5 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center">
+                            Register & Verify Organization
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- SECURE DATA PLATFORM FOOTER SYSTEM -->
+    <footer class="bg-brand-900 text-slate-400 py-12 border-t border-slate-800 text-center mt-auto">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-xs sm:text-sm font-semibold tracking-wider text-slate-500 flex flex-col sm:block gap-2 sm:gap-0">
+                <span>&copy; 2026 WELLDONE GROUP</span>
+                <span class="hidden sm:inline"> | </span>
+                <span>5 Booth St, Millfield, Sunderland, SR4 6HT, England</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+         WELLDONE CLIENT FORM — SUBMISSION ENGINE
+         Mirrors the worker form pattern. Routes via ?type=client
+         ============================================================ -->
+    <script>
+      // ⚡ PASTE YOUR DEPLOYED WEB APP URL HERE
+      const CLIENT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1qRBrO_2a-ZFUqAAlfNmRvr3Gru_Uu6Yr9sXnbE-eLa3cBdChqm80olXKPt-nym0/exec';
+
+      document.getElementById('corporateRegistrationForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalBtnHTML = submitBtn.innerHTML;
+
+        // --- UI: Loading State ---
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+          </svg>
+          Submitting...`;
+
+        // --- Build Payload ---
+        const formData = new FormData(this);
+        const payload = {};
+
+        for (const [key, value] of formData.entries()) {
+          // Handle radio groups — last value wins (correct for radios)
+          payload[key] = value;
+        }
+
+        // --- File Inputs: Base64 encode any uploads ---
+        // (future-proofed — works automatically if you add file inputs later)
+        const fileInputs = this.querySelectorAll('input[type="file"]');
+        const filePromises = Array.from(fileInputs).map(input => {
+          return new Promise(resolve => {
+            if (!input.files || !input.files[0]) return resolve();
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = () => {
+              payload[input.name] = { name: file.name, data: reader.result };
+              resolve();
+            };
+            reader.onerror = () => resolve(); // Skip on error
+            reader.readAsDataURL(file);
+          });
+        });
+
+        await Promise.all(filePromises);
+
+        // --- Submit to Google Apps Script (routing via ?type=client) ---
+        try {
+          const response = await fetch(`${CLIENT_SCRIPT_URL}?type=client`, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+          });
+
+          const result = await response.json();
+
+          if (result.status === 'success') {
+            // --- UI: Success State ---
+            submitBtn.innerHTML = `
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Registration Received!`;
+            submitBtn.classList.remove('bg-brand-900', 'hover:bg-slate-800');
+            submitBtn.classList.add('bg-green-600');
+
+            // Show a confirmation message above the button
+            const confirmMsg = document.createElement('div');
+            confirmMsg.className = 'mt-4 w-full text-center text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded-lg p-4';
+            confirmMsg.innerHTML = `
+              ✅ Your registration has been received. A WELLDONE account manager will be in touch shortly to verify your details and establish service terms.
+            `;
+            submitBtn.parentElement.appendChild(confirmMsg);
+
+            // Scroll to confirmation
+            confirmMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          } else {
+            throw new Error(result.message || 'Unknown error from server.');
+          }
+
+        } catch (err) {
+          console.error('Submission error:', err);
+
+          // --- UI: Error State ---
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHTML;
+
+          const errorMsg = document.createElement('div');
+          errorMsg.className = 'mt-4 w-full text-center text-sm font-semibold text-red-700 bg-red-50 border border-red-200 rounded-lg p-4';
+          errorMsg.textContent = `⚠️ Submission failed: ${err.message}. Please try again or contact support.`;
+          submitBtn.parentElement.appendChild(errorMsg);
+        }
+      });
+    </script>
+
+    <!-- INTERACTION LOGIC SCRIPTS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // === STATIONARY NAVIGATION MANAGEMENT ===
+            const mainHeaderBlock = document.getElementById('mainHeaderBlock');
+
+            window.addEventListener('scroll', () => {
+                const currentScrollY = Math.max(window.scrollY || document.documentElement.scrollTop, 0);
+                
+                if (currentScrollY <= 10) {
+                    mainHeaderBlock.classList.remove('bg-brand-900', 'border-slate-800');
+                    mainHeaderBlock.classList.add('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                } else {
+                    mainHeaderBlock.classList.remove('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                    mainHeaderBlock.classList.add('bg-brand-900', 'border-slate-800');
+                }
+            }, { passive: true });
+
+            // Mobile Navigation Dropdown Controller Interface
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.contains('hidden');
+                
+                if (isHidden) {
+                    mobileMenu.classList.remove('hidden');
+                    mainHeaderBlock.classList.remove('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                    mainHeaderBlock.classList.add('bg-brand-900', 'border-slate-800');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    if (window.scrollY <= 10) {
+                        mainHeaderBlock.classList.remove('bg-brand-900', 'border-slate-800');
+                        mainHeaderBlock.classList.add('bg-brand-900/50', 'backdrop-blur-md', 'border-transparent');
+                    }
+                }
+            });
+
+            // === CORPORATE EMAIL DOMAIN FILTER VALIDATION ===
+            const corporateEmailInput = document.getElementById('corporate_email');
+            const emailWarning = document.getElementById('email_warning');
+            const prohibitedDomains = ['gmail.com', 'yahoo.com', 'yahoo.co.uk', 'hotmail.com', 'hotmail.co.uk', 'outlook.com', 'live.co.uk', 'aol.com', 'icloud.com'];
+
+            corporateEmailInput.addEventListener('input', () => {
+                const emailValue = corporateEmailInput.value.trim().toLowerCase();
+                const domain = emailValue.substring(emailValue.lastIndexOf("@") + 1);
+                
+                if(prohibitedDomains.includes(domain)) {
+                    emailWarning.classList.remove('hidden');
+                } else {
+                    emailWarning.classList.add('hidden');
+                }
+            });
+
+            // === TYPEWRITER INTERFACE CORE ENGINE LOGIC ===
+            const typewriterElement = document.getElementById('typewriter');
+            const phrases = [
+                "On-Demand Talent Pooling",
+                "Instant Crew Scalability",
+                "Certified Specialist Access"
+            ];
+            
+            let phraseIdx = 0, charIdx = 0, isDeleting = false, typingSpeed = 100;
+
+            function type() {
+                const currentPhrase = phrases[phraseIdx];
+                if (isDeleting) {
+                    typewriterElement.textContent = currentPhrase.substring(0, charIdx - 1);
+                    charIdx--;
+                    typingSpeed = 50;
+                } else {
+                    typewriterElement.textContent = currentPhrase.substring(0, charIdx + 1);
+                    charIdx++;
+                    typingSpeed = 100;
+                }
+
+                if (!isDeleting && charIdx === currentPhrase.length) {
+                    isDeleting = true;
+                    typingSpeed = 2000;
+                } else if (isDeleting && charIdx === 0) {
+                    isDeleting = false;
+                    phraseIdx = (phraseIdx + 1) % phrases.length;
+                    typingSpeed = 500;
+                }
+                setTimeout(type, typingSpeed);
+            }
+            type();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Login | WELLDONE GROUP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0B1120',
+                            800: '#1e293b',
+                            500: '#ea580c',
+                            400: '#f97316',
+                            50:  '#f8fafc',
+                        }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 30px rgba(234,88,12,0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+
+        /* Animated grid background */
+        .bg-grid {
+            background-color: #0B1120;
+            background-image:
+                repeating-linear-gradient(0deg,   transparent, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px),
+                repeating-linear-gradient(90deg,  transparent, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px);
+        }
+
+        /* Card slide-up */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: none; }
+        }
+        .slide-up { animation: slideUp 0.45s cubic-bezier(.22,.68,0,1.2) both; }
+
+        /* Input focus ring */
+        .form-input:focus { outline: none; border-color: #ea580c; box-shadow: 0 0 0 3px rgba(234,88,12,0.15); }
+
+        /* Button loading state */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner { animation: spin 0.7s linear infinite; }
+
+        /* Error shake */
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20%,60%  { transform: translateX(-6px); }
+            40%,80%  { transform: translateX(6px); }
+        }
+        .shake { animation: shake 0.4s ease; }
+    </style>
+</head>
+<body class="bg-grid min-h-screen flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
+
+    <!-- Orange glow orb -->
+    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-brand-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div class="absolute -top-32 -right-32 w-80 h-80 bg-brand-500 rounded-full opacity-5 blur-3xl pointer-events-none"></div>
+
+    <!-- Logo -->
+    <a href="index.html" class="mb-8 font-extrabold text-2xl uppercase tracking-tight slide-up" style="animation-delay:.05s">
+        <span class="text-white">WELLDONE</span> <span class="text-brand-500">GROUP</span>
+    </a>
+
+    <!-- Login Card -->
+    <div class="slide-up w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden" style="animation-delay:.12s">
+
+        <!-- Card Header -->
+        <div class="bg-brand-900 px-8 py-6 border-b border-white/10">
+            <h1 class="text-xl font-bold text-white">Portal Login</h1>
+            <p class="text-slate-400 text-sm mt-1">Sign in to access your Worker or Client dashboard.</p>
+        </div>
+
+        <!-- Card Body -->
+        <div class="px-8 py-8">
+
+            <!-- Role Toggle -->
+            <div class="flex bg-slate-100 rounded-xl p-1 mb-6">
+                <button id="roleWorker" onclick="setRole('worker')"
+                    class="flex-1 py-2 rounded-lg text-sm font-semibold transition-all bg-brand-900 text-white shadow-sm">
+                    👷 Worker
+                </button>
+                <button id="roleClient" onclick="setRole('client')"
+                    class="flex-1 py-2 rounded-lg text-sm font-semibold transition-all text-slate-500 hover:text-slate-700">
+                    🏢 Client
+                </button>
+            </div>
+
+            <!-- Form -->
+            <form id="loginForm" novalidate>
+
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
+                        <input id="loginEmail" type="email" autocomplete="email" placeholder="name@example.com"
+                            class="form-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm transition-all">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="block text-sm font-semibold text-slate-700">Password</label>
+                            <a href="#" class="text-xs text-brand-500 font-semibold hover:underline">Forgot password?</a>
+                        </div>
+                        <div class="relative">
+                            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••"
+                                class="form-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm transition-all pr-11">
+                            <button type="button" id="togglePassword"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors">
+                                <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="loginError" class="hidden mt-4 flex items-start gap-2.5 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+                    <svg class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    <p id="loginErrorText" class="text-sm font-semibold text-red-700">Invalid email or password.</p>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" id="loginBtn"
+                    class="mt-6 w-full bg-brand-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                    <span id="loginBtnText">Sign In</span>
+                    <svg id="loginSpinner" class="spinner w-4 h-4 hidden" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="bg-slate-50 border-t border-slate-100 px-8 py-4 text-center">
+            <p class="text-xs text-slate-400">Not registered yet? &nbsp;
+                <a href="register-worker.html" class="text-brand-500 font-semibold hover:underline">Apply as a Worker</a>
+                &nbsp;or&nbsp;
+                <a href="register-client.html" class="text-brand-500 font-semibold hover:underline">Register as a Client</a>
+            </p>
+        </div>
+    </div>
+
+    <p class="mt-8 text-xs text-slate-500 slide-up" style="animation-delay:.2s">&copy; 2026 WELLDONE GROUP &bull; 5 Booth St, Sunderland</p>
+
+<script>
+// ================================================================
+//   WELLDONE LOGIN ENGINE
+//   Validates credentials against your Google Sheet via Apps Script
+// ================================================================
+
+// ⚡ Ensure this is your latest deployed Apps Script URL
+const LOGIN_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1qRBrO_2a-ZFUqAAlfNmRvr3Gru_Uu6Yr9sXnbE-eLa3cBdChqm80olXKPt-nym0/exec';
+
+let currentRole = 'worker';
+
+// ── Role Toggle ──────────────────────────────────────────────
+function setRole(role) {
+    currentRole = role;
+    const workerBtn = document.getElementById('roleWorker');
+    const clientBtn = document.getElementById('roleClient');
+
+    if (role === 'worker') {
+        workerBtn.classList.add('bg-brand-900', 'text-white', 'shadow-sm');
+        workerBtn.classList.remove('text-slate-500');
+        clientBtn.classList.remove('bg-brand-900', 'text-white', 'shadow-sm');
+        clientBtn.classList.add('text-slate-500');
+    } else {
+        clientBtn.classList.add('bg-brand-900', 'text-white', 'shadow-sm');
+        clientBtn.classList.remove('text-slate-500');
+        workerBtn.classList.remove('bg-brand-900', 'text-white', 'shadow-sm');
+        workerBtn.classList.add('text-slate-500');
+    }
+}
+
+// ── Password Toggle ──────────────────────────────────────────
+document.getElementById('togglePassword').addEventListener('click', () => {
+    const input = document.getElementById('loginPassword');
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    document.getElementById('eyeIcon').style.opacity = isHidden ? '0.4' : '1';
+});
+
+// ── Form Submit ──────────────────────────────────────────────
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn      = document.getElementById('loginBtn');
+    const btnText  = document.getElementById('loginBtnText');
+    const spinner  = document.getElementById('loginSpinner');
+    const errorBox = document.getElementById('loginError');
+
+    // Basic client-side check
+    if (!email || !password) {
+        showError('Please enter your email and password.');
+        return;
+    }
+
+    // Loading state
+    btn.disabled  = true;
+    btnText.textContent = 'Signing in...';
+    spinner.classList.remove('hidden');
+    errorBox.classList.add('hidden');
+
+    try {
+        const response = await fetch(`${LOGIN_SCRIPT_URL}?type=login`, {
+            method: 'POST',
+            // ADDED THIS HEADER: This tells Google Apps Script to accept the request without blocking it
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify({ email, password, role: currentRole })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            // Store session info in sessionStorage (cleared when browser tab closes)
+            sessionStorage.setItem('wd_user_email', email);
+            sessionStorage.setItem('wd_user_role',  currentRole);
+            sessionStorage.setItem('wd_user_name',  result.name || email);
+
+            btnText.textContent = '✓ Redirecting...';
+            btn.classList.add('bg-emerald-600');
+            btn.classList.remove('bg-brand-900');
+
+            // Redirect based on role
+            setTimeout(() => {
+                window.location.href = currentRole === 'client'
+                    ? 'client-dashboard.html'
+                    : 'worker-dashboard.html';
+            }, 600);
+
+        } else {
+            showError(result.message || 'Invalid email or password. Please try again.');
+        }
+
+    } catch (err) {
+        showError('Connection error. Please check your internet and try again.');
+        console.error(err);
+    } finally {
+        if (btn.disabled) {
+            btn.disabled = false;
+            btnText.textContent = 'Sign In';
+            spinner.classList.add('hidden');
+        }
+    }
+});
+
+function showError(msg) {
+    const errorBox = document.getElementById('loginError');
+    const errorTxt = document.getElementById('loginErrorText');
+    errorTxt.textContent = msg;
+    errorBox.classList.remove('hidden');
+    errorBox.classList.add('shake');
+    setTimeout(() => errorBox.classList.remove('shake'), 500);
+}
+</script>
+
+</body>
+</html>
